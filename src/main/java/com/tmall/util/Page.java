@@ -6,7 +6,7 @@ public class Page {
     private int total; //总个数
     private String param; //参数
 
-    private static final int defaultCount = 15; //默认每页显示15条
+    private static final int defaultCount = 10; //默认每页显示10条
 
     public void setStart(int start) {
         this.start = start;

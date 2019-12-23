@@ -31,7 +31,8 @@
                 /dist/**=anon
                 /img/**=anon
                 /js/**=anon
-
+                /register = anon
+                /admin_register = anon
                 /administrator_list=anon
                 <!-- 只对业务功能进行权限管理，权限配置本身不需要没有做权限要求，这样做是为了不让初学者混淆 -->
                 /doLogout=logout

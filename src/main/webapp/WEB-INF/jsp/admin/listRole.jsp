@@ -22,47 +22,44 @@
     <div class="listDataTableDiv">
         <table class="table table-striped table-bordered table-hover  table-condensed">
             <thead>
-            <tr>
-                <th data-options="field:'ID'">ID</th>
-                <th data-options="field:'图片'">图片</th>
-                <th data-options="field:'分类名称'">分类名称</th>
-                <th data-options="field:'属性管理'">属性管理</th>
-                <th data-options="field:'产品管理'">产品管理</th>
-                <th data-options="field:'编辑'">编辑</th>
-                <th data-options="field:'删除'">删除</th>
+            <tr class="default">
+                <td>id</td>
+                <td>角色名称</td>
+                <td>角色描述</td>
+                <td>权限</td>
+                <td>操作</td>
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${cs}" var="c">
+            <c:forEach items="${rs}" var="r">
                 <tr>
-                    <td>${c.id}</td>
-                    <td><img height="40px" src="img/category/${c.id}.jpg"></td>
-                    <td>${c.name}</td>
+                    <td>${r.id}</td>
+                    <td>${r.name}</td>
+                    <td>${r.desc_}</td>
+                    <td>
+                        <c:forEach items="${role_permissions[r]}" var="p">
+                            ${p.name} <br>
+                        </c:forEach>
+                    </td>
 
-                    <td><a href="admin_property_list?cid=${c.id}"><span class="glyphicon glyphicon-th-list"></span></a>
-                    </td>
-                    <td><a href="admin_product_list?cid=${c.id}"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-                    </td>
-                    <td><a href="admin_category_edit?id=${c.id}"><span class="glyphicon glyphicon-edit"></span></a></td>
-                    <td><a deleteLink="true" href="admin_category_delete?id=${c.id}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                    <td><a href="editRole?id=${r.id}">编辑</a>
+                         <a href="deleteRole?id=${r.id}">删除</a></td>
+
                 </tr>
             </c:forEach>
             </tbody>
         </table>
     </div>
+<%--
 
-        <div class="pageDiv" style="text-align: center">
-            <%@include file="../include/admin/adminPage.jsp" %>
-        </div>
-    <div id="tb" style="text-align: center">
-        <a href="category_add" class="btn btn-danger"  >添加分类</a>
+    <div class="pageDiv" style="text-align: center">
+        <%@include file="../include/admin/adminPage.jsp" %>
     </div>
+--%>
+
 
 </div>
 </body>
 </html>
-
-
-
 
 

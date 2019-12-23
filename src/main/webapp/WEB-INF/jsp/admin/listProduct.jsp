@@ -17,15 +17,16 @@
     <link href="css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<table class="easyui-datagrid dg "  title="分类管理">
-    <ol class="breadcrumb">
-        <li><a href="admin_category_list">所有分类</a></li>
-        <li><a href="admin_product_list?cid=${c.id}">${c.name}</a></li>
-        <li class="active">产品管理</li>
-    </ol>
-    <div id="tb" style="padding: 2px 5px;">
-        <a href="product_add?id=${c.id}&name=${c.name}" class="easyui-linkbutton" iconCls="icon-add" >添加产品</a>
-    </div>
+<ol class="breadcrumb">
+    <li><a href="admin_category_list">所有分类</a></li>
+    <li><a href="admin_product_list?cid=${c.id}">${c.name}</a></li>
+    <li class="active">产品管理</li>
+</ol>
+<div class="workingArea">
+    <div class="listDataTableDiv">
+        <table class="table table-striped table-bordered table-hover  table-condensed">
+
+
     <thead>
     <tr>
         <th field="ck" checkbox="true"></th>
@@ -69,9 +70,14 @@
     </c:forEach>
     </tbody>
 </table>
+    </div>
+</div>
     <div class="pageDiv" style="text-align: center">
     <%@include file="../include/admin/adminPage.jsp" %>
     </div>
+<div id="tb" style="text-align: center">
+    <a href="product_add?id=${c.id}&name=${c.name}" class="btn btn-danger" >添加产品</a>
+</div>
 </body>
 
 </html>

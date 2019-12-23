@@ -25,13 +25,12 @@
     <li><a href="admin_property_list?cid=${c.id}">${c.name}</a></li>
     <li class="active">属性管理</li>
 </ol>
-<table class="easyui-datagrid dg" title="分类属性管理">
-    <div id="tb" style="padding: 2px 5px;">
-        <a href="property_add?cid=${c.id}&name=${c.name}" class="easyui-linkbutton" iconCls="icon-add" >添加属性</a>
-    </div>
+<div class="workingArea">
+    <div class="listDataTableDiv">
+        <table class="table table-striped table-bordered table-hover  table-condensed">
+
     <thead>
     <tr>
-        <th field="ck" checkbox="true"></th>
         <th data-options="field:'ID'">ID</th>
         <th data-options="field:'属性名称'">属性名称</th>
         <th data-options="field:'编辑'">编辑</th>
@@ -42,7 +41,6 @@
     <c:forEach items="${ps}" var="p">
 
         <tr>
-            <td></td>
             <td>${p.id}</td>
             <td>${p.name}</td>
             <td><a href="admin_property_edit?id=${p.id}"><span
@@ -55,9 +53,14 @@
     </tbody>
 
 </table>
+    </div>
+</div>
 <div class="pageDiv" style="text-align: center">
     <%@include file="../include/admin/adminPage.jsp" %>
 </div>
+        <div id="tb" style="text-align: center">
+            <a href="property_add?cid=${c.id}&name=${c.name}" class="btn btn-danger" >添加属性</a>
+        </div>
 </body>
 
 </html>

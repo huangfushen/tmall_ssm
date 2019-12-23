@@ -80,6 +80,12 @@
         <div class="left-list-item" url="administrator_list" title="系统管理员">
             <a class="easyui-linkbutton" iconCls="icon-teaching" plain="true">系统管理员</a>
         </div>
+        <div class="left-list-item" url="role_list" title="角色分配">
+            <a class="easyui-linkbutton" iconCls="icon-tip" plain="true">角色分配</a>
+        </div>
+        <div class="left-list-item" url="permission_list" title="权限分配">
+            <a class="easyui-linkbutton" iconCls="icon-lock" plain="true">权限分配</a>
+        </div>
 
     </div>
 

@@ -3,11 +3,15 @@ package com.tmall.Controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tmall.pojo.Administrator;
+import com.tmall.pojo.Role;
 import com.tmall.service.AdministratorService;
+import com.tmall.service.RoleService;
 import com.tmall.util.Page;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,27 +22,33 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("")
 public class AdministratorController {
     @Autowired
     AdministratorService administratorService;
+    @Autowired
+    RoleService roleService;
 
 
     //管理员列表
     @RequestMapping("administrator_list")
     public String list(Model model, Page page){
         PageHelper.offsetPage(page.getStart(),page.getCount());
-
         List<Administrator> as= administratorService.list();
-
         int total = (int) new PageInfo<>(as).getTotal();
         page.setTotal(total);
-
+        Map<Administrator,List<Role>> user_roles = new HashMap<>();
+        for (Administrator administrator : as) {
+            List<Role> roles= roleService.listRoles(administrator);
+            user_roles.put(administrator, roles);
+        }
+        model.addAttribute("user_roles", user_roles);
         model.addAttribute("as", as);
-        System.out.println(as);
         model.addAttribute("page", page);
         return "admin/listAdministrator";
     }
@@ -88,6 +98,12 @@ public class AdministratorController {
             model.addAttribute("administrator", null);
             return "admin/register";
         }
+        String salt = new SecureRandomNumberGenerator().nextBytes().toString();
+        int times = 2;
+        String algorithmName = "md5";
+        String encodedPassword = new SimpleHash(algorithmName,administrator.getPassword(),salt,times).toString();
+        administrator.setPassword(encodedPassword);
+        administrator.setSalt(salt);
         administratorService.add(administrator);
         return "redirect:login";
     }

@@ -27,6 +27,7 @@
                 <th>用户名称</th>
                 <th>邮箱</th>
                 <th>密码</th>
+                <th>角色</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -37,6 +38,11 @@
                     <td>${u.name}</td>
                     <td>${u.email}</td>
                     <td>${u.password}</td>
+                    <td>
+                        <c:forEach items="${user_roles[u]}" var="r">
+                            ${r.name} <br>
+                        </c:forEach>
+                    </td>
                     <td>
                         <a href="">修改密码</a>
                         <a href="">删除</a>
@@ -50,7 +56,9 @@
     <div class="pageDiv" style="text-align: center">
         <%@include file="../include/admin/adminPage.jsp" %>
     </div>
-
+    <div id="tb" style="text-align: center">
+        <a href="product_add?id=${c.id}&name=${c.name}" class="btn btn-danger" >添加产品</a>
+    </div>
 
 </div>
 </body>
