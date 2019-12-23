@@ -6,6 +6,7 @@ import com.tmall.pojo.Administrator;
 import com.tmall.pojo.Role;
 import com.tmall.service.AdministratorService;
 import com.tmall.service.RoleService;
+import com.tmall.service.UserRoleService;
 import com.tmall.util.Page;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -18,10 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.HtmlUtils;
 
-import javax.servlet.http.HttpSession;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +33,8 @@ public class AdministratorController {
     AdministratorService administratorService;
     @Autowired
     RoleService roleService;
+    @Autowired
+    UserRoleService userRoleService;
 
 
     //管理员列表
@@ -65,25 +67,12 @@ public class AdministratorController {
             return "redirect:main";
         } catch (AuthenticationException e) {
             System.out.println("验证失败");
-            model.addAttribute("msg", "验证失败");
-            return "redirect:login";
+            model.addAttribute("msg", "用户名或密码错误");
+            return "admin/login";
 
         }
     }
-/*    public String login(@RequestParam("name") String name, @RequestParam("password") String password, Model model, HttpSession session) {
-        name = HtmlUtils.htmlEscape(name);
-        System.out.println(name);
-        System.out.println(password);
 
-        Administrator administrator = administratorService.get(name, password);
-
-        if (null == administrator) {
-            model.addAttribute("msg", "账号或密码错误");
-            return "/login";
-        }
-        session.setAttribute("administrator", administrator);
-        return "redirect:main";
-    }*/
     //注册功能
     @RequestMapping("admin_register")
     public String register(Model model, Administrator administrator) {
@@ -108,4 +97,79 @@ public class AdministratorController {
         return "redirect:login";
     }
 
+    //添加管理员
+
+    @RequestMapping("addAdministrator")
+    public String add(Model model, Administrator administrator,long[] roleIds){
+        String name = administrator.getName();
+        //字符串转义
+        name = HtmlUtils.htmlEscape(name);
+        administrator.setName(name);
+        boolean exist = administratorService.isExist(name);
+        if (exist) {
+            String m = "用户名已经被使用，不能使用";
+            model.addAttribute("msg", m);
+            model.addAttribute("administrator", null);
+            return "redirect:addAdministratorPage";
+        }
+        String salt = new SecureRandomNumberGenerator().nextBytes().toString();
+        int times = 2;
+        String algorithmName = "md5";
+        String encodedPassword = new SimpleHash(algorithmName,administrator.getPassword(),salt,times).toString();
+        administrator.setPassword(encodedPassword);
+        administrator.setSalt(salt);
+        administratorService.add(administrator);
+        userRoleService.setRoles(administrator,roleIds);
+        return "redirect:administrator_list";
+    }
+
+    //添加管理员页面
+    @RequestMapping("addAdministratorPage")
+    public String addAdministratorPage(Model model){
+        List<Role> rs = roleService.list();
+        model.addAttribute("rs", rs);
+        return "admin/addAdministrator";
+    }
+
+    //删除管理员
+    @RequestMapping("deleteAdministrator")
+    public String delete(Model model,long id){
+        administratorService.delete(id);
+        return "redirect:administrator_list";
+    }
+
+    //分配角色页面（编辑页面）
+    @RequestMapping("editAdministratorPage")
+    public String editAdministratorPage(Model model,Long id){
+        List<Role> rs = roleService.list();
+        model.addAttribute("rs", rs);
+       Administrator administrator =administratorService.get(id);
+        model.addAttribute("administrator", administrator);
+        List<Role> roles =roleService.listRoles(administrator);
+        model.addAttribute("currentRoles", roles);
+        return "admin/editAdministrator";
+    }
+    //修改管理员
+    @RequestMapping("updateAdminitrator")
+    public String update(Administrator administrator,long[] roleIds){
+        userRoleService.setRoles(administrator,roleIds);
+
+        String password=administrator.getPassword();
+        //如果在修改的时候没有设置密码，就表示不改动密码
+        if(administrator.getPassword() != "******") {
+            String salt = new SecureRandomNumberGenerator().nextBytes().toString();
+            int times = 2;
+            String algorithmName = "md5";
+            String encodedPassword = new SimpleHash(algorithmName,password,salt,times).toString();
+            administrator.setSalt(salt);
+            administrator.setPassword(encodedPassword);
+        }
+        else
+            administrator.setPassword(null);
+
+        administratorService.update(administrator);
+
+        return "redirect:administrator_list";
+
+    }
 }

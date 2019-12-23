@@ -2,6 +2,10 @@ package com.tmall.Controller;
  
 import java.util.List;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.tmall.pojo.Administrator;
+import com.tmall.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +20,11 @@ public class PermissionController {
     @Autowired PermissionService permissionService;
      
     @RequestMapping("permission_list")
-    public String list(Model model){
+    public String list(Model model, Page page){
+        PageHelper.offsetPage(page.getStart(),page.getCount());
         List<Permission> ps= permissionService.list();
+        int total = (int) new PageInfo<>(ps).getTotal();
+        page.setTotal(total);
         model.addAttribute("ps", ps);
         return "admin/listPermission";
     }

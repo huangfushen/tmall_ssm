@@ -45,10 +45,14 @@
             </tbody>
         </table>
     </div>
-<%--
+
     <div class="pageDiv" style="text-align: center">
         <%@include file="../include/admin/adminPage.jsp" %>
-    </div>--%>
+    </div>
+
+    <div id="tb" style="text-align: center">
+        <a href="addPermissionPage" class="btn btn-danger" >添加权限</a>
+    </div>
 
 
 </div>

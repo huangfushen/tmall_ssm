@@ -44,8 +44,8 @@
                         </c:forEach>
                     </td>
                     <td>
-                        <a href="">修改密码</a>
-                        <a href="">删除</a>
+                        <a href="editAdministratorPage?id=${u.id}">角色分配</a>
+                        <a href="deleteAdministrator?id=${u.id}">删除</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -57,7 +57,7 @@
         <%@include file="../include/admin/adminPage.jsp" %>
     </div>
     <div id="tb" style="text-align: center">
-        <a href="product_add?id=${c.id}&name=${c.name}" class="btn btn-danger" >添加产品</a>
+        <a href="addAdministratorPage" class="btn btn-danger" >添加管理员</a>
     </div>
 
 </div>

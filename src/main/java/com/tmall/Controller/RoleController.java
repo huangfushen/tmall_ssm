@@ -28,53 +28,58 @@ public class RoleController {
 
     @RequestMapping("role_list")
     public String list(Model model, Page page){
+        page.setCount(5);
+        PageHelper.offsetPage(page.getStart(),page.getCount());
         List<Role> rs= roleService.list();
+        int total = (int) new PageInfo<>(rs).getTotal();
+        page.setTotal(total);
         model.addAttribute("rs", rs);
         Map<Role,List<Permission>> role_permissions = new HashMap<>();
-/*        PageHelper.offsetPage(page.getStart(),page.getCount());
-        int total = (int) new PageInfo<>(rs).getTotal();
-        page.setTotal(total);*/
         for (Role role : rs) {
             List<Permission> ps = permissionService.list(role);
             role_permissions.put(role, ps);
         }
-
-
         model.addAttribute("role_permissions", role_permissions);
         System.out.println(role_permissions);
         return "admin/listRole";
     }
-    @RequestMapping("editRole")
-    public String list(Model model,long id){
+
+    @RequestMapping("editRolePage")
+    public String editRolePage(Model model,long id){
         Role role =roleService.get(id);
         model.addAttribute("role", role);
-         
         List<Permission> ps = permissionService.list();
         model.addAttribute("ps", ps);
- 
         List<Permission> currentPermissions = permissionService.list(role);
         model.addAttribute("currentPermissions", currentPermissions);
-         
-        return "editRole";
+        return "admin/editRole";
     }
+
+
     @RequestMapping("updateRole")
     public String update(Role role,long[] permissionIds){
         rolePermissionService.setPermissions(role, permissionIds);
         roleService.update(role);
-        return "redirect:listRole";
+        return "redirect:role_list";
     }
- 
+
+    @RequestMapping("addRolePage")
+    public String addRolePage(Model model){
+        List<Permission> ps = permissionService.list();
+        model.addAttribute("ps", ps);
+        return "admin/addRole";
+    }
+
     @RequestMapping("addRole")
-    public String list(Model model,Role role){
-        System.out.println(role.getName());
-        System.out.println(role.getDesc_());
+    public String addRole(Role role,long[] permissionIds){
         roleService.add(role);
-        return "redirect:listRole";
+        rolePermissionService.setPermissions(role, permissionIds);
+        return "redirect:role_list";
     }
     @RequestMapping("deleteRole")
     public String delete(Model model,long id){
         roleService.delete(id);
-        return "redirect:listRole";
+        return "redirect:role_list";
     }   
  
 }

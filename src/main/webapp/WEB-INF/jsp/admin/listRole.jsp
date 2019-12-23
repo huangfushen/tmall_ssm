@@ -42,7 +42,7 @@
                         </c:forEach>
                     </td>
 
-                    <td><a href="editRole?id=${r.id}">编辑</a>
+                    <td><a href="editRolePage?id=${r.id}">编辑</a>
                          <a href="deleteRole?id=${r.id}">删除</a></td>
 
                 </tr>
@@ -50,12 +50,14 @@
             </tbody>
         </table>
     </div>
-<%--
 
     <div class="pageDiv" style="text-align: center">
         <%@include file="../include/admin/adminPage.jsp" %>
     </div>
---%>
+    <div id="tb" style="text-align: center">
+        <a href="addRolePage" class="btn btn-danger" >添加角色</a>
+    </div>
+
 
 
 </div>
