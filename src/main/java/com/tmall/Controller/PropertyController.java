@@ -7,6 +7,7 @@ import com.tmall.pojo.Property;
 import com.tmall.service.CategoryService;
 import com.tmall.service.PropertyService;
 import com.tmall.util.Page;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ public class PropertyController {
     @Autowired
     PropertyService propertyService;
 
+    @RequiresPermissions("property_add")
     @RequestMapping("property_add")
     public String property_add(Model model,int cid,String name){
         model.addAttribute("cid", cid);
@@ -30,12 +32,14 @@ public class PropertyController {
         return "admin/addProperty";
     }
 
+    @RequiresPermissions("admin_property_add")
     @RequestMapping("admin_property_add")
     public String add(Property property){
         propertyService.add(property);
         return  "redirect:admin_property_list?cid="+property.getCid();
     }
 
+    @RequiresPermissions("admin_property_delete")
     @RequestMapping("admin_property_delete")
     public String delete(int id){
         Property property = propertyService.get(id);
@@ -44,6 +48,7 @@ public class PropertyController {
 
     }
 
+    @RequiresPermissions("admin_property_edit")
     @RequestMapping("admin_property_edit")
     public String edit(Model model,int id){
         Property property = propertyService.get(id);
@@ -53,12 +58,14 @@ public class PropertyController {
         return "admin/editProperty";
     }
 
+    @RequiresPermissions("admin_property_update")
     @RequestMapping("admin_property_update")
     public String update(Property property){
         propertyService.update(property);
         return "redirect:admin_property_list?cid="+property.getCid();
     }
 
+    @RequiresPermissions("admin_property_list")
     @RequestMapping("admin_property_list")
     public String list(int cid, Model model , Page page){
         Category c = categoryService.get(cid);

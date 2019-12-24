@@ -7,6 +7,7 @@ import com.tmall.pojo.Product;
 import com.tmall.service.CategoryService;
 import com.tmall.service.ProductService;
 import com.tmall.util.Page;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,12 +24,16 @@ public class ProductController {
 
     @Autowired
     CategoryService categoryService;
+
+    @RequiresPermissions("product_add")
     @RequestMapping("product_add")
     public String product_add(Model model,int id,String name){
         model.addAttribute("id",id);
         model.addAttribute("name",name);
         return "admin/addProduct";
     }
+
+    @RequiresPermissions("admin_product_add")
     @RequestMapping("admin_product_add")
     public String add(Product product){
         product.setCreateDate(new Date());
@@ -36,12 +41,15 @@ public class ProductController {
         return  "redirect:admin_product_list?cid="+product.getCid();
     }
 
+    @RequiresPermissions("admin_product_delete")
     @RequestMapping("admin_product_delete")
     public String delete(int id){
         Product product = productService.get(id);
         productService.delete(id);
         return  "redirect:admin_product_list?cid="+product.getCid();
     }
+
+    @RequiresPermissions("admin_product_edit")
     @RequestMapping("admin_product_edit")
     public String edit(int id, Model model){
         Product product = productService.get(id);
@@ -51,12 +59,14 @@ public class ProductController {
         return "admin/editProduct";
     }
 
+    @RequiresPermissions("admin_product_update")
     @RequestMapping("admin_product_update")
     public String update(Product product){
         productService.update(product);
         return  "redirect:admin_product_list?cid="+product.getCid();
     }
 
+    @RequiresPermissions("admin_product_list")
     @RequestMapping("admin_product_list")
     public String list(int cid, Model model , Page page){
         Category c = categoryService.get(cid);

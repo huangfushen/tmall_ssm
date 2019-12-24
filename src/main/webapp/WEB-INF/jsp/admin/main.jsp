@@ -96,7 +96,7 @@
 <div region="center" class="right">
     <div id="tab" fit="true">
         <div title="主页" iconCls="icon-home">
-            <h1 style="text-align: center;"> welcome to tmall admin system</h1>
+            <img  src="/tmall_ssm/img/bg.JPG" style="width:1350px;height:800px">
         </div>
     </div>
 </div>

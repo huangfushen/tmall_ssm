@@ -38,7 +38,7 @@
                     <td>${r.desc_}</td>
                     <td>
                         <c:forEach items="${role_permissions[r]}" var="p">
-                            ${p.name} <br>
+                            ${p.name}<br>
                         </c:forEach>
                     </td>
 

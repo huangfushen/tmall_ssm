@@ -53,15 +53,18 @@
                     <tr>
                         <td>权限配置</td>
                         <td><div class="checkbox" style="padding-left: 25px">
+                            <% int i=0; %>
                             <c:forEach items="${ps}" var="p">
+                                <% i++; %>
                                 <c:set var="hasPermission" value="false" />
                                 <c:forEach items="${currentPermissions}" var="currentPermission">
                                     <c:if test="${p.id==currentPermission.id}">
                                         <c:set var="hasPermission" value="true" />
                                     </c:if>
                                 </c:forEach>
-                                <input type="checkbox"  ${hasPermission?"checked='checked'":"" } name="permissionIds" value="${p.id}"> ${p.name}<br>
+                                <div style="display: inline-block; width: 450px"><input type="checkbox"  ${hasPermission?"checked='checked'":"" } name="permissionIds" value="${p.id}"> ${p.name}<span>-----------------</span>${p.desc_}</div>
                             </c:forEach>
+
                         </div>
                         </td>
                     </tr>

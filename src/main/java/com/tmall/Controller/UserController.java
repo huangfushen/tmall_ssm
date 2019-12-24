@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.tmall.pojo.User;
 import com.tmall.service.UserService;
 import com.tmall.util.Page;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @RequiresPermissions("admin_user_list")
     @RequestMapping("admin_user_list")
     public String list(Model model, Page page){
         PageHelper.offsetPage(page.getStart(),page.getCount());

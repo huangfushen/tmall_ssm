@@ -7,6 +7,7 @@ import com.tmall.util.Page;
 import com.tmall.pojo.Order;
 import com.tmall.service.OrderItemService;
 import com.tmall.service.OrderService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,7 @@ public class OrderController {
     @Autowired
     OrderItemService orderItemService;
 
+    @RequiresPermissions("admin_order_list")
     @RequestMapping("admin_order_list")
     public String list(Model model, Page page){
         PageHelper.offsetPage(page.getStart(),page.getCount());
@@ -42,6 +44,7 @@ public class OrderController {
         return "admin/listOrder";
     }
 
+    @RequiresPermissions("admin_order_delivery")
     @RequestMapping("admin_order_delivery")
     public String delivery(Order o) throws IOException {
         o.setDeliveryDate(new Date());

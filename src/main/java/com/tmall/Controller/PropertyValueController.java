@@ -4,6 +4,7 @@ import com.tmall.pojo.Product;
 import com.tmall.pojo.PropertyValue;
 import com.tmall.service.ProductService;
 import com.tmall.service.PropertyValueService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ public class PropertyValueController {
     @Autowired
     ProductService productService;
 
+    @RequiresPermissions("admin_propertyValue_edit")
     @RequestMapping("admin_propertyValue_edit")
     public String edit(Model model,int pid) {
         Product p = productService.get(pid);
@@ -30,6 +32,8 @@ public class PropertyValueController {
         model.addAttribute("pvs", pvs);
         return "admin/editPropertyValue";
     }
+
+    @RequiresPermissions("admin_propertyValue_update")
     @RequestMapping("admin_propertyValue_update")
     @ResponseBody
     public String update(PropertyValue pv) {

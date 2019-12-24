@@ -6,6 +6,7 @@ import com.tmall.service.ProductImageService;
 import com.tmall.service.ProductService;
 import com.tmall.util.ImageUtil;
 import com.tmall.util.UploadedImageFile;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,7 @@ public class ProductImageController {
     @Autowired
     ProductService productService;
 
+    @RequiresPermissions("admin_productImage_add")
     @RequestMapping("admin_productImage_add")
     public String add(ProductImage  pi, HttpSession session, UploadedImageFile uploadedImageFile) {
         productImageService.add(pi);
@@ -63,6 +65,8 @@ public class ProductImageController {
         return "redirect:admin_productImage_list?pid="+pi.getPid();
     }
 
+
+    @RequiresPermissions("admin_productImage_delete")
     @RequestMapping("admin_productImage_delete")
     public String delete(int id,HttpSession session) {
         ProductImage pi = productImageService.get(id);
@@ -95,6 +99,7 @@ public class ProductImageController {
         return "redirect:admin_productImage_list?pid="+pi.getPid();
     }
 
+    @RequiresPermissions("admin_productImage_list")
     @RequestMapping("admin_productImage_list")
     public String list(int pid, Model model) {
         Product p =productService.get(pid);

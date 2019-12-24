@@ -26,12 +26,13 @@ public class CategoryController {
     @Autowired
     CategoryService categroyService;
 
+    @RequiresPermissions("category_add")
     @RequestMapping("category_add")
     public String category_add(){
         return "admin/addCategory";
     }
 
-    //@RequiresPermissions("listProduct1")
+    @RequiresPermissions("admin_category_list")
     @RequestMapping("admin_category_list")
     public String list(Model model,Page page){
         PageHelper.offsetPage(page.getStart(),page.getCount());
@@ -43,6 +44,7 @@ public class CategoryController {
         return "admin/listCategory";
     }
 
+    @RequiresPermissions("admin_category_add")
     @RequestMapping("admin_category_add")
     public String add(Category c, HttpSession session, UploadedImageFile uploadedImageFile)throws IOException {
         categroyService.add(c);
@@ -56,6 +58,8 @@ public class CategoryController {
         ImageIO.write(img, "jpg", file);
         return "redirect:/admin_category_list";
     }
+
+    @RequiresPermissions("admin_category_delete")
     @RequestMapping("admin_category_delete")
     public String delete(int id,HttpSession session) throws IOException {
         categroyService.delete(id);
@@ -64,6 +68,8 @@ public class CategoryController {
         file.delete();
         return "redirect:/admin_category_list";
     }
+
+    @RequiresPermissions("admin_category_edit")
     @RequestMapping("admin_category_edit")
     public String edit(int id,Model model){
         Category c = categroyService.get(id);
@@ -71,6 +77,7 @@ public class CategoryController {
         return "admin/editCategory";
     }
 
+    @RequiresPermissions("admin_category_update")
     @RequestMapping("admin_category_update")
     public String update(Category category,HttpSession session, UploadedImageFile uploadedImageFile) throws IOException{
         categroyService.update(category);

@@ -23,11 +23,11 @@ public class PageController {
     public String register_page(){
         return "admin/register";
     }
-    //没有权限
+/*    //没有权限
     @RequestMapping("unauthorized")
     public String noPerms(){
         return "admin/unauthorized";
-    }
+    }*/
 
     @RequestMapping("registerPage")
     public String registerPage(){

@@ -23,21 +23,61 @@
         <property name="filterChainDefinitions">
             <value>
                 <!-- anon表示此地址不需要任何权限即可访问 -->
+                /main=anon
                 /login=anon
                 /admin_login =anon
-                /index=anon
-                /main=anon
+                /register = anon
+                /admin_register = anon
                 /css/**=anon
                 /dist/**=anon
                 /img/**=anon
                 /js/**=anon
-                /register = anon
-                /admin_register = anon
-
-                <!-- 只对业务功能进行权限管理，权限配置本身不需要没有做权限要求，这样做是为了不让初学者混淆 -->
                 /doLogout=logout
                 <!--所有的请求(除去配置的静态资源请求或请求地址为anon的请求)都要通过登录验证,如果未登录则跳到/login -->
-                /** = authc
+                /administrator_list = authc
+                /addAdministrator = authc
+                /addAdministratorPage = authc
+                /deleteAdministrator = authc
+                /editAdministratorPage = authc
+                /updateAdminitrator = authc
+                /category_add = authc
+                /admin_category_list = authc
+                /admin_category_add = authc
+                /admin_category_delete = authc
+                /admin_category_edit = authc
+                /admin_category_update = authc
+                /admin_order_list = authc
+                /admin_order_delivery = authc
+                /permission_list = authc
+                /editPermission = authc
+                /updatePermission = authc
+                /addPermissionPage = authc
+                /addPermission = authc
+                /deletePermission = authc
+                /product_add = authc
+                /admin_product_add = authc
+                /admin_product_delete = authc
+                /admin_product_edit = authc
+                /admin_product_update = authc
+                /admin_product_list = authc
+                /admin_productImage_add = authc
+                /admin_productImage_delete = authc
+                /admin_productImage_list = authc
+                /property_add = authc
+                /admin_property_add = authc
+                /admin_property_delete = authc
+                /admin_property_edit = authc
+                /admin_property_update = authc
+                /admin_property_list = authc
+                /admin_propertyValue_edit = authc
+                /admin_propertyValue_update = authc
+                /role_list = authc
+                /editRolePage = authc
+                /updateRole = authc
+                /addRolePage = authc
+                /addRole = authc
+                /deleteRole = authc
+                /admin_user_list = authc
             </value>
         </property>
     </bean>

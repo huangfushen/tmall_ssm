@@ -100,7 +100,7 @@ public class AdministratorController {
     }
 
     //添加管理员
-
+    @RequiresPermissions("addAdministrator")
     @RequestMapping("addAdministrator")
     public String add(Model model, Administrator administrator,long[] roleIds){
         String name = administrator.getName();
@@ -126,6 +126,7 @@ public class AdministratorController {
     }
 
     //添加管理员页面
+    @RequiresPermissions("addAdministratorPage")
     @RequestMapping("addAdministratorPage")
     public String addAdministratorPage(Model model){
         List<Role> rs = roleService.list();
@@ -134,6 +135,7 @@ public class AdministratorController {
     }
 
     //删除管理员
+    @RequiresPermissions("deleteAdministrator")
     @RequestMapping("deleteAdministrator")
     public String delete(Model model,long id){
         administratorService.delete(id);
@@ -141,6 +143,7 @@ public class AdministratorController {
     }
 
     //分配角色页面（编辑页面）
+    @RequiresPermissions("editAdministratorPage")
     @RequestMapping("editAdministratorPage")
     public String editAdministratorPage(Model model,Long id){
         List<Role> rs = roleService.list();
@@ -152,6 +155,7 @@ public class AdministratorController {
         return "admin/editAdministrator";
     }
     //修改管理员
+    @RequiresPermissions("updateAdminitrator")
     @RequestMapping("updateAdminitrator")
     public String update(Administrator administrator,long[] roleIds){
         userRoleService.setRoles(administrator,roleIds);
