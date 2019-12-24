@@ -44,7 +44,7 @@
             <form method="post" id="addForm" action="addAdministrator">
                 <table class="addTable" style="border-collapse:separate; border-spacing:10px;">
                     <tr>
-                        <td>用户名称</td>
+                        <td>管理员名称</td>
                         <td><input id="name" name="name" type="text"
                                    class="form-control"></td>
                     </tr>

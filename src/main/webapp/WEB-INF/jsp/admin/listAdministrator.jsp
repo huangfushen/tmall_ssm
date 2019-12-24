@@ -44,7 +44,7 @@
                         </c:forEach>
                     </td>
                     <td>
-                        <a href="editAdministratorPage?id=${u.id}">角色分配</a>
+                        <a href="editAdministratorPage">角色分配</a>
                         <a href="deleteAdministrator?id=${u.id}">删除</a>
                     </td>
                 </tr>

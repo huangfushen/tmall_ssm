@@ -5,6 +5,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>天猫后台管理系统</title>
+    <link href="css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/tmall_ssm/dist/css/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="/tmall_ssm/dist/css/icon.css"/>
     <link rel="stylesheet" type="text/css" href="/tmall_ssm/dist/css/main.css"/>
@@ -26,12 +27,6 @@
                 }
             });
             $(".left-list-item").on("click", function () {
-                /* var childs = $(this).siblings();
-                for (var i = 0; i < childs.length; i++) {
-                    $(childs[i]).removeClass(
-                            "left-list-item-selected");
-                }
-                $(this).addClass("left-list-item-selected"); */
                 var title = $(this).attr("title");
                 var url = $(this).attr("url");
                 if ($("#tab").tabs("exists", title)) {
@@ -41,7 +36,10 @@
                     var icons = {
                         "分类管理": "icon-student",
                         "用户管理": "icon-teacher",
-                        "订单管理": "icon-course"
+                        "订单管理": "icon-course",
+                        "系统管理员": "icon-teaching",
+                        "角色管理": "icon-tip",
+                        "权限管理": "icon-lock"
                     };
                     $("#tab").tabs("add", {
                         title: title,
@@ -51,6 +49,7 @@
 
                     });
                 }
+
             });
 
         });
@@ -63,8 +62,12 @@
 
 <div region="north" class="header">
     <img alt="logo" src="/tmall_ssm/img/site/tmall_admin.png">
+    <div style="float: right; padding-right: 50px;padding-top: 15px">
+        <a href="doLogout" class="btn btn-default">您好${subject.principal},退出</a><br>
+    </div>
+
 </div>
-<div region="south" class="footer">Copyright &copy;2017</div>
+<div region="south" class="footer">Copyright &copy;2019</div>
 <div region="west" class="left" title="菜单管理">
     <div class="left-list">
 

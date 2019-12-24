@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.tmall.pojo.Administrator;
 import com.tmall.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,13 +31,18 @@ public class PermissionController {
     public String list(Model model,long id){
         Permission permission =permissionService.get(id);
         model.addAttribute("permission", permission);
-        return "editPermission";
+        return "admin/editPermission";
     }
     @RequestMapping("updatePermission")
     public String update(Permission permission){
- 
+
         permissionService.update(permission);
-        return "redirect:listPermission";
+        return "redirect:permission_list";
+    }
+    //添加权限页面
+    @RequestMapping("addPermissionPage")
+    public String addPermissionPage(){
+        return "admin/addPermission";
     }
  
     @RequestMapping("addPermission")
@@ -46,12 +50,12 @@ public class PermissionController {
         System.out.println(permission.getName());
         System.out.println(permission.getDesc_());
         permissionService.add(permission);
-        return "redirect:listPermission";
+        return "redirect:permission_list";
     }
     @RequestMapping("deletePermission")
     public String delete(Model model,long id){
         permissionService.delete(id);
-        return "redirect:listPermission";
+        return "redirect:permission_list";
     }   
  
 }

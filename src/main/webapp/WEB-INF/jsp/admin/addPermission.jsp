@@ -11,21 +11,25 @@
 <script type="text/javascript" src="/tmall_ssm/dist/js/loading.js"></script>
 <link href="css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
 
-<title>添加角色</title>
+<title>添加权限</title>
 
 <script>
     $(function () {
         $("#addForm").submit(function () {
-            if (!checkEmpty("name", "角色名称"))
+            if (!checkEmpty("name", "权限名称"))
                 return false;
             return true;
         });
         $("#addForm").submit(function () {
-            if (!checkEmpty("desc_", "角色描述"))
+            if (!checkEmpty("desc_", "权限描述"))
                 return false;
             return true;
         });
-
+        $("#addForm").submit(function () {
+            if (!checkEmpty("url", "url"))
+                return false;
+            return true;
+        });
 
     });
 </script>
@@ -33,32 +37,28 @@
 <div class="workingArea">
     <div class="panel panel-warning editDiv">
         <ol class="breadcrumb">
-            <li><a href="role_list">角色管理</a></li>
-            <li class="active">添加角色</li>
+            <li><a href="permission_list">权限管理</a></li>
+            <li class="active">添加权限</li>
         </ol>
         <div class="panel-body">
-            <form method="post" id="addForm" action="addRole">
+            <form method="post" id="addForm" action="addPermission">
                 <table class="addTable" style="border-collapse:separate; border-spacing:10px;">
                     <tr>
-                        <td>角色名称</td>
+                        <td>权限名称</td>
                         <td><input id="name" name="name" type="text"
                                    class="form-control"></td>
                     </tr>
                     <tr>
-                        <td>角色描述</td>
+                        <td>权限描述</td>
                         <td><input id="desc_" name="desc_" type="text"
                                    class="form-control"></td>
                     </tr>
 
                     <tr>
-                        <td>权限配置</td>
-                        <td><div class="checkbox" style="padding-left: 25px">
-                            <c:forEach items="${ps}" var="p">
-                                <c:set var="hasPermission" value="false" />
-                                <input type="checkbox"  name="permissionIds" value="${p.id}"> ${p.name}<br>
-                            </c:forEach>
-                        </div>
-                        </td>
+                        <td>url</td>
+                        <td><input id="url" name="url" type="text"
+                                   class="form-control"></td>
+
                     </tr>
                     <tr class="submitTR">
                         <td colspan="2" align="center">
